@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.MembersInfoMapper">
+
+    <select id="getMember" resultType="MembersInfo" parameterType="Integer">
+        select * from membersinfo where id = #{id}
+    </select>
+
+    <select id="iii" resultType="MembersInfo" parameterType="Integer">
+        select * from membersinfo where id = #{id}
+    </select>
+
+    <select id="getMemberByMem" resultType="MembersInfo" parameterType="MembersInfo">
+        select * from membersinfo where id = #{id} and mname like '%${mName}%'
+    </select>
+    <select id="getCount" resultType="int">
+        select count(*) from membersinfo
+    </select>
+
+    <select id="getMemberByList" resultType="MembersInfo" parameterType="list">
+        select * from membersinfo where id = #{list[0].id}
+    </select>
+
+    <select id="getMemberByArr" resultType="MembersInfo" parameterType="int[]">
+        select * from membersinfo where id in 
+        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getMembers" resultType="MembersInfo" parameterType="Integer">
+        select * from membersinfo
+    </select>
+
+    <select id="getMemberByMap" resultType="MembersInfo" parameterType="map">
+        select * from membersinfo where id=#{id} and mAge =#{mAge}
+    </select>
+    <select id="getMemberByBean" resultType="MembersInfo" >
+        select * from membersinfo where id=#{0.id} or id =#{1.id}
+    </select>
+
+    <insert id="addMember" parameterType="membersInfo"
+    useGeneratedKeys="true" keyProperty="id">
+        insert into membersinfo
+        values (null,#{mName},#{mgender},#{mAge},#{mAddress},#{mEmail})
+    </insert>
+
+    <delete id="delMember" parameterType="int">
+        delete from membersinfo where id =#{id}
+    </delete>
+    <delete id="delMemberforName" >
+        delete from membersinfo where id=#{id} and mname=#{mName}
+    </delete>
+    <delete id="delMembers" >
+        delete from membersinfo where id=#{0} or id=#{1} or id=#{2}
+    </delete>
+
+    <update id="modifyMember" parameterType="membersInfo">
+        update membersinfo set mName=#{mName},mgender=#{mgender},mAge=#{mAge},mAddress=#{mAddress},mEmail=#{mEmail}
+        where id=#{id}
+    </update>
+
+</mapper>
